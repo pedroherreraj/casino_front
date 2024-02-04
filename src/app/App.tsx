@@ -1,16 +1,19 @@
+import React from 'react';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'common/styles/index.scss';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
-import React from 'react';
-import logo from './logo.svg';
-import Home from 'features/backoffice/Home';
-import Root from 'features/backoffice/layout/Root';
-import ErrorPage from 'common/components/ErrorPage';
-// import { BrowserRouter, Routes, Route, Navigate, useSearchParams, Outlet } from 'react-router-dom';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+
+import Home from 'features/backoffice/Home';
+import Root from 'features/backoffice/layout/Root';
+import ErrorPage from 'common/components/ErrorPage';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -24,7 +27,10 @@ const router = createBrowserRouter([
 ]);
 function App() {
   return (
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={true} />
+    </QueryClientProvider>
   );
 }
 
